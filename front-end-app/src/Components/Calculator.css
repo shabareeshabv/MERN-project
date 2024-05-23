@@ -1,0 +1,22 @@
+/* src/Components/Calculator.css */
+
+.Calculator {
+    text-align: center;
+  }
+  
+  .Calculator input {
+    margin: 0.5em;
+    padding: 0.5em;
+    font-size: 1em;
+  }
+  
+  .Calculator button {
+    margin: 1em;
+    padding: 0.5em 1em;
+    font-size: 1em;
+  }
+  
+  .Calculator h1, .Calculator h2 {
+    margin: 1em 0;
+  }
+  
