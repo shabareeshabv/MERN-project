@@ -1,0 +1,29 @@
+/* CSS for the navigation bar */
+.navbar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-item {
+    margin: 0 15px; /* Adjust this value to change the gap between items */
+  }
+  
+  .nav-Link {
+    text-decoration: none;
+    color: #000; /* Adjust the color as needed */
+    font-weight: bold; /* Optional: Make the text bold */
+  }
+  
+  .nav-Link.active {
+    color: #007bff; /* Change the color for the active link */
+  }
+  
+  /* Optional: Add hover effect */
+  .nav-Link:hover {
+    color: #0056b3;
+  }
+  

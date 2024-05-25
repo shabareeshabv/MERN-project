@@ -4,9 +4,15 @@ import React, { useState } from 'react';
 import './Calculator.css';
 
 const Calculator = () => {
+  const [student, setStudent] = useState({ name: '', usn: '' });
   const [semesters, setSemesters] = useState([{ sgpa: '' }]);
   const [cgpa, setCgpa] = useState(0);
   const [percentage, setPercentage] = useState(0);
+
+  const handleStudentChange = (event) => {
+    const { name, value } = event.target;
+    setStudent({ ...student, [name]: value });
+  };
 
   const handleInputChange = (index, event) => {
     const values = [...semesters];
@@ -41,8 +47,24 @@ const Calculator = () => {
   return (
     <div className="Calculator">
       <h1>SGPA & CGPA Calculator</h1>
+      <div className="student-info">
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={student.name}
+          onChange={handleStudentChange}
+        />
+        <input
+          type="text"
+          name="usn"
+          placeholder="USN"
+          value={student.usn}
+          onChange={handleStudentChange}
+        />
+      </div>
       {semesters.map((sem, index) => (
-        <div key={index}>
+        <div key={index} className="semester-input">
           <input
             type="number"
             name="sgpa"
@@ -56,6 +78,10 @@ const Calculator = () => {
       <button onClick={calculateCGPA}>Calculate CGPA</button>
       <h2>CGPA: {cgpa.toFixed(2)}</h2>
       <h2>Percentage: {percentage.toFixed(2)}%</h2>
+      <div className="student-summary">
+        <h3>Student Name: {student.name}</h3>
+        <h3>USN: {student.usn}</h3>
+      </div>
     </div>
   );
 };
