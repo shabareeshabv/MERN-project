@@ -25,6 +25,9 @@ import './Navbar.css'
         <li className="nav-item">
           <Link className="nav-Link" to="contact">contact</Link>
         </li>
+        <li className="nav-item">
+          <Link className="nav-Link" to="signup">Signup</Link>
+        </li>
        
       </ul>
     </div>
