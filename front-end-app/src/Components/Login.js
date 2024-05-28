@@ -1,59 +1,59 @@
-// src/Login.js
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate, Link } from 'react-router-dom';
 
-export const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+const Login = () => {
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  let navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === 'admin@example.com' && password === 'admin') {
-      alert('Login successful!');
-      setError('');
-    } else {
-      setError('Invalid email or password');
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: credentials.email, password: credentials.password })
+      });
+      const json = await response.json();
+      console.log(json);
+      if (json.success) {
+        // Save the auth token to local storage and redirect
+        localStorage.setItem('userEmail', credentials.email);
+        localStorage.setItem('token', json.authToken);
+        navigate("/");
+      } else {
+        alert("Enter Valid Credentials");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("Something went wrong. Please try again later.");
     }
-  };
+  }
+
+  const onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  }
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-4">
-          <h3 className="text-center">Login</h3>
-          <form onSubmit={handleLogin}>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            {error && <div className="alert alert-danger mt-3">{error}</div>}
-            <button type="submit" className="btn btn-primary btn-block mt-3">
-              Login
-            </button>
-          </form>
-        </div>
+    <div style={{ backgroundImage: 'url("https://images.pexels.com/photos/326278/pexels-photo-326278.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")', height: '100vh', backgroundSize: 'cover' }}>
+      <div className='container'>
+        <form className='w-50 m-auto mt-5 border bg-dark border-success rounded' onSubmit={handleSubmit}>
+          <div className="m-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+            <input type="email" className="form-control" name='email' value={credentials.email} onChange={onChange} aria-describedby="emailHelp" />
+            <div id="emailHelp" className="form-text">We'll never share your email with anyone.</div>
+          </div>
+          <div className="m-3">
+            <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+            <input type="password" className="form-control" value={credentials.password} onChange={onChange} name='password' />
+          </div>
+          <button type="submit" className="m-3 btn btn-success">Submit</button>
+          <Link to="/signup" className="m-3 mx-1 btn btn-danger">New User</Link>
+        </form>
       </div>
     </div>
   );
-};
+}
 
-
+export default Login;
