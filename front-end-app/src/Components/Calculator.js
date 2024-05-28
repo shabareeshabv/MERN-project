@@ -1,13 +1,13 @@
-// src/Components/Calculator.js
-
 import React, { useState } from 'react';
 import './Calculator.css';
+import axios from 'axios';
 
 const Calculator = () => {
   const [student, setStudent] = useState({ name: '', usn: '' });
   const [semesters, setSemesters] = useState([{ sgpa: '' }]);
   const [cgpa, setCgpa] = useState(0);
   const [percentage, setPercentage] = useState(0);
+  const [message, setMessage] = useState(''); // State for success/error message
 
   const handleStudentChange = (event) => {
     const { name, value } = event.target;
@@ -24,7 +24,7 @@ const Calculator = () => {
     setSemesters([...semesters, { sgpa: '' }]);
   };
 
-  const calculateCGPA = () => {
+  const calculateCGPA = async () => {
     let totalSGPA = 0;
     let count = 0;
     semesters.forEach(sem => {
@@ -36,12 +36,16 @@ const Calculator = () => {
     });
     const cgpa = totalSGPA / count;
     setCgpa(cgpa);
-    convertToPercentage(cgpa);
-  };
-
-  const convertToPercentage = (cgpa) => {
     const percentage = cgpa * 9.5;
     setPercentage(percentage);
+
+    const studentData = { ...student, semesters, cgpa, percentage };
+    try {
+      await axios.post('http://localhost:5000/api/students', studentData);
+      setMessage(''); // Set success message
+    } catch (error) {
+      setMessage(''); // Set error message
+    }
   };
 
   return (
@@ -78,6 +82,7 @@ const Calculator = () => {
       <button onClick={calculateCGPA}>Calculate CGPA</button>
       <h2>CGPA: {cgpa.toFixed(2)}</h2>
       <h2>Percentage: {percentage.toFixed(2)}%</h2>
+      {message && <p>{message}</p>} {/* Conditionally render message */}
       <div className="student-summary">
         <h3>Student Name: {student.name}</h3>
         <h3>USN: {student.usn}</h3>
