@@ -36,7 +36,7 @@ const Login = () => {
   }
 
   return (
-    <div style={{ backgroundImage: 'url("https://images.pexels.com/photos/326278/pexels-photo-326278.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")', height: '100vh', backgroundSize: 'cover' }}>
+    <div style={{ backgroundImage: 'url("")', height: '100vh', backgroundSize: 'cover' }}>
       <div className='container'>
         <form className='w-50 m-auto mt-5 border bg-dark border-success rounded' onSubmit={handleSubmit}>
           <div className="m-3">
@@ -48,7 +48,7 @@ const Login = () => {
             <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
             <input type="password" className="form-control" value={credentials.password} onChange={onChange} name='password' />
           </div>
-          <button type="submit" className="m-3 btn btn-success">Submit</button>
+          <button type="submit" className="m-1 btn btn-success">Submit</button>
           <Link to="/signup" className="m-3 mx-1 btn btn-danger">New User</Link>
         </form>
       </div>

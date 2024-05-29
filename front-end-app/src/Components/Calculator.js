@@ -50,7 +50,7 @@ const Calculator = () => {
 
   return (
     <div className="Calculator">
-      <h1>SGPA & CGPA Calculator</h1>
+      <h1>CGPA Calculator</h1>
       <div className="student-info">
         <input
           type="text"
